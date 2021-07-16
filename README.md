@@ -7,7 +7,7 @@ Based on
 |Step|Status
 |----|----|
 |Hardware preparation|done
-|BLE data transmition|In progress
+|BLE/MQTT data transmition|In progress
 |Web APP | Not start
 |Model|Not start
 
