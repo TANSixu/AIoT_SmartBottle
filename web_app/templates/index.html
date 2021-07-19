@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+function showtime(){
+    let t = new Date();
+    let y = t.getFullYear();
+    let mo = t.getMonth();
+    let d = t.getDate();
+    let w = t.getDay();
+    let array = new Array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+    let h = t.getHours();
+    let mi = t.getMinutes();
+    let s = t.getSeconds();
+    let showtime = mo+"/"+d+"/"+y+" "+array[w]+" "+h+((mi<10)?":0":":")+mi+((s<10)?":0":":")+s;
+    document.getElementById("clock").value=showtime;
+}
+setInterval("showtime()",1000);
+</script>
+
+<p>{{ movies|length }} 记录 - Today - <input type="text" id="clock" style="width: 200px;height: 30px;border: none;padding: 2px 10px;"></p>
+<ul class="movie-list">
+    {% for movie in movies %}
+    <li>{{ movie.title }}
+        <span class="float-right">
+            {{ movie.year }}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+
+<img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/intake_water.png') }}" title="dr~dr~k">
+
+<script src="https://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+<script src="https://cdn.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+<script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<!--<script src="https://cdn.highcharts.com.cn/highcharts/themes/grid-light.js"></script>-->
+
+<script>
+const t = new Date();
+const mo = t.getMonth();
+const d = t.getDate();
+</script>
+
+<div id="today" style="min-width:400px;height:400px"></div>
+<script>
+    var chart = Highcharts.chart('today',{
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '今日饮水'
+    },
+    xAxis: {
+        categories: [
+            mo+"/"+d
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '饮水量 (ml)'
+        }
+    },
+    tooltip: {
+        // head + 每个 point + footer 拼接成完整的 table
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: '饮水量',
+        data: [1200]
+    }]
+});
+</script>
+
+<div id="five" style="min-width:400px;height:400px"></div>
+<script>
+    var chart = Highcharts.chart('five',{
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '最近5天饮水'
+    },
+    xAxis: {
+        categories: [
+            mo+"/"+(d-4),mo+"/"+(d-3),mo+"/"+(d-2),mo+"/"+(d-1),mo+"/"+d
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '饮水量 (ml)'
+        }
+    },
+    tooltip: {
+        // head + 每个 point + footer 拼接成完整的 table
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: '饮水量',
+        data: [500,850,1000,500,1200]
+    }]
+});
+</script>
+
+{% endblock %}
