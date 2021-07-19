@@ -7,7 +7,7 @@ Based on
 |Step|Status
 |----|----|
 |Hardware preparation|done
-|BLE/MQTT data transmition|In progress
-|Web APP | Not start
-|Model|Not start
+|BLE/MQTT data transmition|*ble done on 7.18*
+|Web APP | In progress by LIANG
+|Model|In progress by TAN
 
