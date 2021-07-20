@@ -8,8 +8,6 @@ import numpy as np
 from multiprocessing import Queue
 from threading import Thread
 
-logging.basicConfig()
-logging.getLogger('pygatt').setLevel(logging.DEBUG)
 
 adapter = pygatt.GATTToolBackend()
 rx=[]
@@ -36,44 +34,31 @@ def handle_data(handle, value):
 
     # print('Accelerometer = x={} y={} z={}'.format(x_short, y_short, z_short))
 
-    if(len(rx)<500):
-        rx.append(x_short)
-        ry.append(y_short)
-        rz.append(z_short)
-    else:
-        plt.plot(rx,label='x')
-        # plt.plot(ry, label='y')
-        # plt.plot(rz, label='z')
-        # df=pd.DataFrame()
-        xarr=np.array(rx)
-        np.save('x_data3.npy', xarr)
-        plt.legend()
-        plt.show()
-        # plt.pause(0.1)
-        # plt.ioff()
-        end=time.time()
-        print(f"time spent : {end-start}")
-        sys.exit(0)
+
 
 
 
 def temp_handle(handle, value):
     print(f'received: {value}')
 
-try:
-    adapter.start()
-    device = adapter.connect('CF:BE:9E:5F:65:DA', address_type=pygatt.BLEAddressType.random, auto_reconnect=True)
-    print('found')
-    time.sleep(15)
-    # device = adapter.connect('CF:BE:9E:5F:65:DA', address_type=pygatt.BLEAddressType.random, auto_reconnect=True)
-    print('connected')
-    # device.subscribe("e95dca4b-251d-470a-a062-fa1922dfa9a8",callback=handle_data)
-    start=time.time()
-    while True:
-        # pass
-        num = device.char_read_handle('0x27')
-        handle_data(handle='0x27', value=num)
-        # time.sleep(0.1)
-   
-finally:
-    adapter.stop()
+
+
+
+def get_data(mqtt):
+    logging.basicConfig()
+    logging.getLogger('pygatt').setLevel(logging.DEBUG)
+
+    try:
+        adapter.start()
+        device = adapter.connect('CF:BE:9E:5F:65:DA', address_type=pygatt.BLEAddressType.random, auto_reconnect=True)
+        print('found')
+        time.sleep(15)
+        print('connected')
+        start = time.time()
+        while True:
+            num = device.char_read_handle('0x27')
+            handle_data(handle='0x27', value=num)
+            # time.sleep(0.1)
+
+    finally:
+        adapter.stop()

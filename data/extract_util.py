@@ -102,6 +102,26 @@ def threshold(data, valleys, x_thresh, y_thresh):
 
 
 def feature_extract(data_segment):
+    '''
+    
+
+    Parameters
+    ----------
+    data_segment : ndarr
+        A data segment
+
+    Returns
+    -------
+    H : int
+        Max - Min
+    duration : int
+        Size of data segment
+    avg : double
+        Mean of acceleration within data segment
+    ratio : double
+        increase/decrease ratio
+
+    '''
     H = max(data_segment)-min(data_segment)
     duration = len(data_segment)
     avg = np.mean(data_segment)
@@ -110,20 +130,20 @@ def feature_extract(data_segment):
 
 
 # For test only
-# =============================================================================
-# aa = np.load('x_data3.npy')/1000+1
-# df1=pd.Series(aa)
-# df2=df1.rolling(11).mean()
-# df2=df2.values
-# # df1.plot()
-# # df3=scipy.signal.savgol_filter(df2,11,7)
-# # plt.plot(df3)  
-# plt.plot(df2, 'b')
-# valey=valley_detection(df2, 0.0008, 2, 1)
-# plt.scatter(valey, df2[valey], c='r')
-# check = threshold(df2, valey, 15, 1.0)
-# # plt.plot(check[1])
-# print(feature_extract(check[2]))
-# plt.show()
-# =============================================================================
+
+aa = np.load('x_data3.npy')/1000+1
+df1=pd.Series(aa)
+df2=df1.rolling(11).mean()
+df2=df2.values
+# df1.plot()
+# df3=scipy.signal.savgol_filter(df2,11,7)
+# plt.plot(df3)  
+plt.plot(df2, 'b')
+valey=valley_detection(df2, 0.01, 3, 1)
+plt.scatter(valey, df2[valey], c='r')
+check = threshold(df2, valey, 15, 1.0)
+# plt.plot(check[1])
+print(feature_extract(check[2]))
+plt.show()
+
 
