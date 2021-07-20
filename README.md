@@ -11,5 +11,5 @@ Based on
 |Web APP | In progress by LIANG
 |Event extraction|*Done on 7.20*
 |Event identification|In progress
-Regression moddle|In progress
+Regression model|In progress
 
