@@ -126,7 +126,7 @@ def feature_extract(data_segment):
     duration = len(data_segment)
     avg = np.mean(data_segment)
     ratio = np.argmax(data_segment)/(duration-np.argmax(data_segment))
-    return H, duration, avg, ratio
+    return [[H, duration, avg, ratio]]
 
 
 # For test only
