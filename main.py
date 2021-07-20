@@ -46,7 +46,7 @@ def handle_data(handle, value):
         # plt.plot(rz, label='z')
         # df=pd.DataFrame()
         xarr=np.array(rx)
-        np.save('x_data2.npy', xarr)
+        np.save('x_data3.npy', xarr)
         plt.legend()
         plt.show()
         # plt.pause(0.1)

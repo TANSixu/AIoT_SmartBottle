@@ -36,7 +36,7 @@ def low_pass_filter(raw_data):
     
     
     
-def valley_detection(data, threshold, local_num):
+def valley_detection(data, threshold, local_num, safe_limit):
     '''
     
 
@@ -48,6 +48,8 @@ def valley_detection(data, threshold, local_num):
         Deviation surpass the threshold, then detect as valley
     local_num : int
         Check the nearest {local_num} points as mean.
+    safe_limit : int
+        Once beyond the limit, exclude from valley
 
     Returns
     -------
@@ -57,7 +59,7 @@ def valley_detection(data, threshold, local_num):
     '''
     valey_args=[]
     for i in range(1, len(data)):
-        if mean(data[max(i-local_num, 1):i])-data[i] > threshold and mean(data[min(i+1, len(data)-1):min(i+local_num, len(data)-1)])-data[i] > threshold:
+        if data[i] <= safe_limit and mean(data[max(i-local_num, 1):i])-data[i] > threshold and np.mean(data[min(i+1, len(data)-1):min(i+local_num, len(data)-1)])-data[i] > threshold:
             valey_args.append(i)
     return np.array(valey_args)
 
@@ -102,22 +104,22 @@ def threshold(data, valleys, x_thresh, y_thresh):
 def feature_extract(data_segment):
     H = max(data_segment)-min(data_segment)
     duration = len(data_segment)
-    avg = mean(data_segment)
+    avg = np.mean(data_segment)
     ratio = np.argmax(data_segment)/(duration-np.argmax(data_segment))
     return H, duration, avg, ratio
 
 
 # For test only
 # =============================================================================
-# aa = -np.load('x_data2.npy')/1000+1
+# aa = np.load('x_data3.npy')/1000+1
 # df1=pd.Series(aa)
-# df2=df1.rolling(6).mean()
+# df2=df1.rolling(11).mean()
 # df2=df2.values
 # # df1.plot()
 # # df3=scipy.signal.savgol_filter(df2,11,7)
 # # plt.plot(df3)  
 # plt.plot(df2, 'b')
-# valey=valley_detection(df2, 0.008, 2)
+# valey=valley_detection(df2, 0.0008, 2, 1)
 # plt.scatter(valey, df2[valey], c='r')
 # check = threshold(df2, valey, 15, 1.0)
 # # plt.plot(check[1])
