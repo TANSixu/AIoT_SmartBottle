@@ -25,8 +25,8 @@ def low_pass_filter(raw_data, rolling_size):
         after low pass filter
 
     '''
-    raw_data=raw_data/1000+1
-    df_raw = pd.Series({'Raw data':raw_data})
+    raw_data=raw_data/1000.0+1
+    df_raw = pd.Series(raw_data)
     df_filter = df_raw.rolling(rolling_size).mean()
     return df_filter.values
 
@@ -131,19 +131,19 @@ def feature_extract(data_segment):
 
 # For test only
 
-aa = np.load('x_data3.npy')/1000+1
-df1=pd.Series(aa)
-df2=df1.rolling(11).mean()
-df2=df2.values
-# df1.plot()
-# df3=scipy.signal.savgol_filter(df2,11,7)
-# plt.plot(df3)  
-plt.plot(df2, 'b')
-valey=valley_detection(df2, 0.01, 3, 1)
-plt.scatter(valey, df2[valey], c='r')
-check = threshold(df2, valey, 15, 1.0)
-# plt.plot(check[1])
-print(feature_extract(check[2]))
-plt.show()
+# aa = np.load('x_data3.npy')/1000+1
+# df1=pd.Series(aa)
+# df2=df1.rolling(11).mean()
+# df2=df2.values
+# # df1.plot()
+# # df3=scipy.signal.savgol_filter(df2,11,7)
+# # plt.plot(df3)
+# plt.plot(df2, 'b')
+# valey=valley_detection(df2, 0.01, 3, 1)
+# plt.scatter(valey, df2[valey], c='r')
+# check = threshold(df2, valey, 15, 1.0)
+# # plt.plot(check[1])
+# print(feature_extract(check[2]))
+# plt.show()
 
 
