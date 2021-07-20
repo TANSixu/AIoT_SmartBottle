@@ -7,7 +7,7 @@ Based on
 |Step|Status
 |----|----|
 |Hardware preparation|done
-|BLE/MQTT data transmition|*ble done on 7.18*
+|BLE/MQTT data transmition|*ble done on 7.18* *MQTT done on 7.20*
 |Web APP | In progress by LIANG
 |Event extraction|*Done on 7.20*
 |Event identification|In progress
