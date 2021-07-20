@@ -4,9 +4,9 @@ import struct
 import matplotlib.pyplot as plt
 import sys
 import logging
-import pandas as pd
 import numpy as np
-import datetime
+from multiprocessing import Queue
+from threading import Thread
 
 logging.basicConfig()
 logging.getLogger('pygatt').setLevel(logging.DEBUG)

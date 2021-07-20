@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def low_pass_filter(raw_data):
+def low_pass_filter(raw_data, rolling_size):
     '''
     
 
@@ -27,7 +27,7 @@ def low_pass_filter(raw_data):
     '''
     raw_data=raw_data/1000+1
     df_raw = pd.Series({'Raw data':raw_data})
-    df_filter = df_raw.rolling(11).mean()
+    df_filter = df_raw.rolling(rolling_size).mean()
     return df_filter.values
 
 
@@ -59,7 +59,7 @@ def valley_detection(data, threshold, local_num, safe_limit):
     '''
     valey_args=[]
     for i in range(1, len(data)):
-        if data[i] <= safe_limit and mean(data[max(i-local_num, 1):i])-data[i] > threshold and np.mean(data[min(i+1, len(data)-1):min(i+local_num, len(data)-1)])-data[i] > threshold:
+        if data[i] <= safe_limit and np.mean(data[max(i-local_num, 1):i])-data[i] > threshold and np.mean(data[min(i+1, len(data)-1):min(i+local_num, len(data)-1)])-data[i] > threshold:
             valey_args.append(i)
     return np.array(valey_args)
 
