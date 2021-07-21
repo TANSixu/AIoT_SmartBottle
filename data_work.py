@@ -3,7 +3,8 @@ from extract_util import *
 import numpy as np
 import struct
 import time
-
+import pygatt
+import os
 
 def handle_data(handle, value):
     """
@@ -54,12 +55,20 @@ def get_data(mqtt):
 
 def process_data(mqtt, block_num):
     x_data=[]
+    cnt=0
     while True:
+        print(cnt)
         if len(x_data) < block_num:
             x_data.append(mqtt.get())
+            cnt+=1
             continue
 
         x_pro = np.array(x_data)
+
+        # only for test
+        np.save('drinkornot.npy', x_pro)
+        os._exit(1)
+
         x_pro = low_pass_filter(x_pro, 6)
         valley = valley_detection(x_pro, 0.01, 3, 1.0)
         raw_event = threshold(x_pro, valley, 15, 1.0)
