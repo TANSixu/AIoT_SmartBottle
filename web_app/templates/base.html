@@ -4,21 +4,23 @@
     {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.name }}'s Watchlist</title>
+    <title>Smart Bottle</title>
     <link rel="icon" href="{{ url_for('static', filename='intake_water.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     {% endblock %}
 </head>
-<body>
+<body background="../static/images/flower.jpeg">
     <h2>
         <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='intake_water.png') }}">
-        {{ user.name }}'s drinking record
+        {{ user.name }}'s Drinking Record
     </h2>
     <nav>
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('statistics') }}">Statistics</a></li>
         </ul>
     </nav>
     {% block content %}{% endblock %}
 </body>
+
 </html>

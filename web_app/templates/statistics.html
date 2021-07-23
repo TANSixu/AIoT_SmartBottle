@@ -2,17 +2,6 @@
 
 {% block content %}
 
-<p>{{ movies|length }} records - Today</p>
-<ul class="movie-list">
-    {% for movie in movies %}
-    <li>{{ movie.title }}
-        <span class="float-right">
-            {{ movie.year }}
-        </span>
-    </li>
-    {% endfor %}
-</ul>
-
 <script src="https://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
 <script src="https://cdn.highcharts.com.cn/highcharts/modules/exporting.js"></script>
 <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
@@ -24,21 +13,21 @@ var mo = t.getMonth();
 var d = t.getDate();
 </script>
 
-<div id="Today" style="min-width:400px;height:400px"></div>
+<div id="five" style="min-width:400px;height:400px"></div>
 <script>
-var chart = Highcharts.chart('Today', {
+var chart = Highcharts.chart('five', {
 	chart: {
 		zoomType: 'xy'
 	},
 	title: {
-		text: 'Today'
+		text: 'Last 5 Days'
 	},
 	subtitle: {
 		text: 'Smart Bottle'
 	},
 	xAxis: [{
         categories: [
-                    mo+"/"+d
+                    mo+"/"+(d-4),mo+"/"+(d-3),mo+"/"+(d-2),mo+"/"+(d-1),mo+"/"+d
         ],
         crosshair: true
 	}],
@@ -73,25 +62,24 @@ var chart = Highcharts.chart('Today', {
 	tooltip: {
 		shared: true
 	},
-    series: [{
+	series: [{
 		name: 'Frequency',
-		type: 'column',
+		type: 'spline',
         yAxis: 1,
-		data: [5],
-        color: Highcharts.getOptions().colors[0],
+		data: [2,3,4,2,6],
 		tooltip: {
 			valueSuffix: ''
 		},
-    }, {
+        color: Highcharts.getOptions().colors[0]
+    },{
 		name: 'Volume',
-		type: 'column',
-		data: [1000],
-        color: Highcharts.getOptions().colors[1],
+		type: 'spline',
+		data: [500,850,1000,500,1200],
 		tooltip: {
 			valueSuffix: ' ml'
-		}
+		},
+        color: Highcharts.getOptions().colors[1]
 	}]
 });
 </script>
-
 {% endblock %}
