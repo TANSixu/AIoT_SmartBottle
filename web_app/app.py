@@ -41,6 +41,10 @@ def index():
     movies = Movie.query.all()
     return render_template('index.html', movies=movies)
 
+@app.route('/statistics')
+def statistics():
+    movies = Movie.query.all()
+    return render_template('statistics.html', movies=movies)
 
 import click
 
