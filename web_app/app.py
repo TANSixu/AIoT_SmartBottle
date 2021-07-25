@@ -39,7 +39,7 @@ def page_not_found(e):
 @app.route('/')
 def index():
     movies = Movie.query.all()
-    return render_template('index.html', movies=movies)
+    return render_template('index.html', movies=movies, aaa=[2,3,4])
 
 @app.route('/statistics')
 def statistics():
