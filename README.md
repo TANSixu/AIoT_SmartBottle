@@ -9,8 +9,8 @@ Based on
 |----|----|
 |Hardware preparation|done
 |BLE/MQTT data transmition|*ble done on 7.18* *MQTT done on 7.20*
-|Web APP | In progress by LIANG
+|Web APP | In progress by LIANG AND TAN
 |Event extraction|*Done on 7.20*
-|Event identification|In progress
-Regression model|In progress
+|Event identification|*Done on 7.24*
+Regression model|*Done on 7.25*
 
