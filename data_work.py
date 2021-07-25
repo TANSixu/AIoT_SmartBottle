@@ -5,7 +5,9 @@ import struct
 import time
 import pygatt
 import os
-import matplotlib.pyplot as plt
+
+import pickle
+import sklearn
 
 def handle_data(handle, value):
     """
@@ -55,6 +57,9 @@ def get_data(mqtt):
 
 
 def process_data(mqtt, block_num):
+    with open('./model/svmModel.pkl', 'rb') as file:
+        svm = pickle.load(file)
+    
     x_data=[]
     y_data=[]
     z_data=[]
@@ -82,13 +87,32 @@ def process_data(mqtt, block_num):
         my_data = np.array([x_pro, y_pro, z_pro])
 
         # only for test
-        np.save('new_new_dataset1.npy', my_data)
-        os._exit(1)
+        # np.save('new_new_dataset4.npy', my_data)
+        # os._exit(1)
 
-        x_pro = low_pass_filter(x_pro, 6)
-        valley = valley_detection(x_pro, 0.01, 3, 1.0)
-        raw_event = threshold(x_pro, valley, 15, 1.0)
-        for t in raw_event:
-            feature = feature_extract(t)
-            print(feature)
+        tx = low_pass_filter(x_pro, 6)
+        ty = low_pass_filter(y_pro, 6)
+        tz = low_pass_filter(z_pro, 6)
+        valley = valley_detection(tx, 0.001, 2, 0.2)
+        check = threshold(tx, ty, tz, valley, 15, 0.4)
+
+        for i in range(len(check)):
+            c = check[i]
+            cx = c[0]
+            cy = c[1]
+            cz = c[2]
+
+            theta = np.arctan(np.square(cy ** 2 + cz ** 2) / cx)
+            alpha = np.arctan(cz / cy)
+            theta = (np.rad2deg(theta) + 180) % 180
+            alpha = np.rad2deg(alpha)
+
+            safe = sip_bound(alpha, 7)
+            raw_feature = feature_engineering(theta[safe[0]:safe[1] + 1])
+            t_feature = transform_data(raw_feature)
+
+            amt = predict_amt(t_feature,svm)
+            print(f'You drank {amt}g water.')
+
+        cnt=0
         x_data.clear()
