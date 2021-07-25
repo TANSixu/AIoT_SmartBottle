@@ -34,7 +34,7 @@ class BleUartDevice:
 		time.sleep(1)
 
 	def readTemperature(self):
-		temp = self.gattRequester.read_by_handle(0x27)
+		temp = self.gattRequester.read_by_handle(0x2d)
 		# temp=self.gattRequester.read_by_uuid('e95d9250-251d-470a-a062-fa1922dfa9a8')
 		temp = util.convertMicrobitValue(temp)
 		return temp

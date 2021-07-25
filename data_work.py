@@ -48,7 +48,13 @@ def get_data(mqtt):
         start = time.time()
         while True:
             num = device.char_read_handle('0x27')
+            temperature = device.char_read_handle('0x2d')
             xyz = handle_data(handle='0x27', value=num)
+            temperature = temperature[0]
+#TODO: just for test
+            print(temperature)
+            print(xyz)
+
             mqtt.put(xyz)
             # time.sleep(0.1)
 
