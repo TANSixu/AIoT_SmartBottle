@@ -2,7 +2,19 @@
 
 {% block content %}
 
-<p>{{ movies|length }} records - Today</p>
+
+<link href="../static/goal-thermometer.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript">
+    var currentAmount = 37;
+</script>
+
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+
+<script type="text/javascript" src="../static/goal-thermometer.js"></script>
+
+
+<p style="color: white">{{ movies|length }} records - Today</p>
 <ul class="movie-list">
     {% for movie in movies %}
     <li>{{ movie.title }}
@@ -24,7 +36,11 @@ var mo = t.getMonth();
 var d = t.getDate();
 </script>
 
-<div id="Today" style="min-width:400px;height:400px"></div>
+<div>
+    <div id="goal-thermometer" class="float-left"></div>
+    <div id="Today" class="float-right" style="min-width:400px;height:400px"></div>
+</div>
+
 <script>
 var chart = Highcharts.chart('Today', {
 	chart: {

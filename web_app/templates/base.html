@@ -4,13 +4,13 @@
     {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Bottle</title>
+    <title style="color: white">Smart Bottle</title>
     <link rel="icon" href="{{ url_for('static', filename='intake_water.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     {% endblock %}
 </head>
-<body background="../static/images/flower.jpeg">
-    <h2>
+<body background="../static/images/lines.jpeg">
+    <h2 style="color: white">
         <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='intake_water.png') }}">
         {{ user.name }}'s Drinking Record
     </h2>
@@ -21,6 +21,9 @@
         </ul>
     </nav>
     {% block content %}{% endblock %}
+    <h5 class="float-right" style="color: white">
+        *It is advised to drink 6~8 glasses per day.(1 glass = 240ml)
+    </h5>
 </body>
 
 </html>
