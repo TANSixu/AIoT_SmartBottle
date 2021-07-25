@@ -3,7 +3,7 @@ from threading import Thread
 from data_work import*
 import sys
 
-process_block=150
+process_block=100
 
 
 if __name__ == '__main__':
