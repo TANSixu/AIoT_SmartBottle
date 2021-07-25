@@ -69,3 +69,8 @@ def forge():
 
     db.session.commit()
     click.echo('Done.')
+    
+    
+    
+if __name__ == '__main__':
+    app.run()

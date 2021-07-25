@@ -76,8 +76,8 @@ def process_data(mqtt, block_num):
         z_data=[]
         cnt=0
         while True:
-            print(cnt)
-            if len(x_data) < block_num:
+            # print(cnt)
+            if cnt < block_num:
                 read = mqtt.get()
 
                 temperature=0
@@ -85,7 +85,14 @@ def process_data(mqtt, block_num):
                 x_data.append(t_xyz[0])
                 y_data.append(t_xyz[1])
                 z_data.append(t_xyz[2])
-                cnt+=1
+
+                if block_num-cnt<40:
+                    if x_data[-1]/1000+1>0.25:
+                        cnt=cnt-1
+                    else:
+                        cnt+=1
+                else:
+                    cnt+=1
                 continue
 
             x_pro = np.array(x_data)
@@ -109,10 +116,10 @@ def process_data(mqtt, block_num):
             tz = low_pass_filter(z_pro, 3)
             valley = valley_detection(tx, 0.001, 2, 0.2)
             check = threshold(tx, ty, tz, valley, 10, 0.4)
-            plt.plot(-tx+1)
-            plt.scatter(valley, -tx[valley]+1, color='r')
-            plt.axhline(y=0.4)
-            plt.show()
+            # plt.plot(-tx+1)
+            # plt.scatter(valley, -tx[valley]+1, color='r')
+            # plt.axhline(y=0.4)
+            # plt.show()
 
             for i in range(len(check)):
                 c = check[i]
@@ -140,5 +147,7 @@ def process_data(mqtt, block_num):
 
             cnt=0
             x_data.clear()
+            y_data.clear()
+            z_data.clear()
     except Exception:
         print(Exception.message)
