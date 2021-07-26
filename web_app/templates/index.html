@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../static/goal-thermometer.js"></script>
 
 
-<p style="color: white">{{ records|length }} records - Today</p>
+<p style="color: white"> {{ records|length }} Most recent records </p>
 <ul class="movie-list">
     {% for r in records %}
     <li>{{ r.time }}
@@ -47,7 +47,7 @@ var chart = Highcharts.chart('Today', {
 		zoomType: 'xy'
 	},
 	title: {
-		text: 'Today'
+		text: '{{cur_date}}'
 	},
 	subtitle: {
 		text: 'Smart Bottle'

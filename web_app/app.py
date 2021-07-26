@@ -24,8 +24,8 @@ def page_not_found(e):
 
 @app.route('/')
 def index():
-    # current_time = time.strftime("%Y-%m-%d", time.localtime())
-    current_time = '2021-7-25'
+    current_time = time.strftime("%Y-%m-%d", time.localtime())
+    # current_time = '2021-7-25'
     cur.execute('''select * from drinking
                       order by  time desc   
                       limit 5''')
@@ -44,12 +44,28 @@ def index():
         freq.append(dr[0])
         volume.append(round(dr[1], 3))
 
-    return render_template('index.html', freq=freq, vol=volume, records=record)
+    return render_template('index.html', freq=freq, vol=volume, records=record, cur_date=str(current_time))
 
 @app.route('/statistics')
 def statistics():
-    movies = Movie.query.all()
-    return render_template('statistics.html', movies=movies)
+    cur.execute('''select to_char(time, 'yyyy-MM-dd') as day, count(*) as freq, sum(drinking_amount) as tot_amt
+                        from drinking
+                        group by day
+                        order by day
+                        limit 3''')
+    result = cur.fetchall()
+    days = []
+    days_freq=[]
+    days_amt=[]
+    for r in result:
+        days.append(r[0])
+        days_freq.append(r[1])
+        days_amt.append(round(r[2], 2))
+
+    if len(days)<5:
+        days_freq = [0 for i in range(5-len(days))]+days_freq
+        days_amt = [0 for i in range(5-len(days))]+days_amt
+    return render_template('statistics.html', freq = days_freq, amt = days_amt)
 
 
 

@@ -26,9 +26,9 @@ var chart = Highcharts.chart('five', {
 		text: 'Smart Bottle'
 	},
 	xAxis: [{
-        categories: [
-                    mo+"/"+(d-4),mo+"/"+(d-3),mo+"/"+(d-2),mo+"/"+(d-1),mo+"/"+d
-        ],
+        categories: ['4 days ago', '3 days ago', 'The day before yesterday', 'Yesterday', 'Today'],
+        {#mo+"/"+(d-4),mo+"/"+(d-3),mo+"/"+(d-2),mo+"/"+(d-1),mo+"/"+d#}
+
         crosshair: true
 	}],
 	yAxis: [{ // Primary yAxis
@@ -66,7 +66,7 @@ var chart = Highcharts.chart('five', {
 		name: 'Frequency',
 		type: 'spline',
         yAxis: 1,
-		data: [2,3,4,2,6],
+		data: {{freq}},
 		tooltip: {
 			valueSuffix: ''
 		},
@@ -74,7 +74,7 @@ var chart = Highcharts.chart('five', {
     },{
 		name: 'Volume',
 		type: 'spline',
-		data: [500,850,1000,500,1200],
+		data: {{amt}},
 		tooltip: {
 			valueSuffix: ' ml'
 		},
