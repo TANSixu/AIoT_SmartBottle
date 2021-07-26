@@ -14,12 +14,12 @@
 <script type="text/javascript" src="../static/goal-thermometer.js"></script>
 
 
-<p style="color: white">{{ movies|length }} records - Today</p>
+<p style="color: white">{{ records|length }} records - Today</p>
 <ul class="movie-list">
-    {% for movie in movies %}
-    <li>{{ movie.title }}
+    {% for r in records %}
+    <li>{{ r.time }}
         <span class="float-right">
-            {{ movie.year }}
+            {{ r.amt }}
         </span>
     </li>
     {% endfor %}
@@ -93,7 +93,7 @@ var chart = Highcharts.chart('Today', {
 		name: 'Frequency',
 		type: 'column',
         yAxis: 1,
-		data: {{ aaa }},
+		data: {{ freq }},
         color: Highcharts.getOptions().colors[0],
 		tooltip: {
 			valueSuffix: ''
@@ -101,7 +101,7 @@ var chart = Highcharts.chart('Today', {
     }, {
 		name: 'Volume',
 		type: 'column',
-		data: [1000],
+		data: {{ vol }},
         color: Highcharts.getOptions().colors[1],
 		tooltip: {
 			valueSuffix: ' ml'
