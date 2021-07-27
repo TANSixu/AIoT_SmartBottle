@@ -1,5 +1,5 @@
 import logging
-from extract_util import *
+from core_funct.extract_util import *
 import numpy as np
 import struct
 import time

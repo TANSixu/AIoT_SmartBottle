@@ -2,7 +2,7 @@ import time
 import struct
 from bluetooth import ble
 
-import util
+import core_funct.util
 
 
 class MyGATTRequester(ble.GATTRequester):

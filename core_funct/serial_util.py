@@ -58,25 +58,31 @@ topic = "channels/" + channelID + "/publish/" + apiKey
 
 ser = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=1)
 
-while(True):
-    # get the system performance data
-    msg = ser.readline()
-    smsg = msg.decode('utf-8').strip()
-    if len(smsg) > 0:
-        print('RX:{}'.format(smsg))
-        # build the payload string
-        tPayload = "field1=" + str(smsg)
-        # attempt to publish this data to the topic
-        try:
-            publish.single(topic, payload=tPayload, hostname=mqttHost, port=tPort, tls=tTLS, transport=tTransport)
-            time.sleep(15)
-        except (KeyboardInterrupt):
-            break
-        except:
-            print ("There was an error while publishing the data.")
+def upload_temperature():
+    while(True):
+        # get the system performance data
+        msg = ser.readline()
+        smsg = msg.decode('utf-8').strip()
+        if len(smsg) > 0:
+            print('temperature:{}'.format(smsg))
+            # build the payload string
+            tPayload = "field1=" + str(smsg)
+            # attempt to publish this data to the topic
+            try:
+                publish.single(topic, payload=tPayload, hostname=mqttHost, port=tPort, tls=tTLS, transport=tTransport)
+                time.sleep(15)
+            except (KeyboardInterrupt):
+                break
+            except:
+                print ("There was an error while publishing the data.")
 
 
-
+def reminder(time_interval):
+    while True:
+        time.sleep(time_interval)
+        response = '$'
+        ser.write(str.encode(response))
+        print("Hey mate, it's time to have a sip.")
 # try:
 #
 #     print("Listening on /dev/ttyACM0... Press CTRL+C to exit")

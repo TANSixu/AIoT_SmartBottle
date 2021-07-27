@@ -4,8 +4,8 @@
 import time
 from bluetooth import ble
 
-import util
-from bleuartlib import BleUartDevice
+import core_funct.util
+from core_funct.bleuartlib import BleUartDevice
 
 
 def addBleUartDevice(address, name):
